@@ -4,7 +4,7 @@ export const GAME_CONSTANTS = {
   // Season structure
   REGULAR_SEASON_WEEKS: 11,
   PLAYOFF_WEEKS: 3,
-  TOTAL_WEEKS: 4,
+  TOTAL_WEEKS: 14,
   
   // Actions
   ACTIONS_PER_WEEK: 3,

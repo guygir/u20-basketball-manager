@@ -7,6 +7,7 @@ import { loadGameState } from '@/lib/basketball/local-storage';
 import { loadAchievementProgress } from '@/lib/basketball/achievements';
 import { sortPlayersByPosition, calculateOverallRating } from '@/lib/basketball/utils';
 import type { Player } from '@/lib/basketball/types';
+import HexagonStats from '@/components/HexagonStats';
 
 export default function VictoryPage() {
   const router = useRouter();
@@ -97,27 +98,35 @@ export default function VictoryPage() {
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             🌟 Championship Roster 🌟
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedPlayers.map((player: Player) => {
               const overall = calculateOverallRating(player);
               return (
-                <div key={player.id} className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-yellow-400">
-                  <div className="flex justify-between items-start mb-2">
+                <div key={player.id} className="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-lg border-2 border-yellow-400">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
                       <div className="font-bold text-gray-800 text-lg">{player.name}</div>
                       <div className="text-sm text-gray-600">{player.position} • Age {player.age}</div>
                     </div>
                     <div className="text-2xl font-bold text-yellow-600">{overall}</div>
                   </div>
-                  <div className="grid grid-cols-2 gap-1 text-xs text-gray-600">
-                    <div>OUT-O: {player.outside_offense}</div>
-                    <div>IN-O: {player.inside_offense}</div>
-                    <div>OUT-D: {player.outside_defense}</div>
-                    <div>IN-D: {player.inside_defense}</div>
-                    <div>PASS: {player.passing}</div>
-                    <div>ATH: {player.athleticism}</div>
+                  
+                  {/* Hexagon Stats */}
+                  <div className="flex justify-center mb-4">
+                    <HexagonStats
+                      stats={{
+                        outsideOffense: player.outside_offense,
+                        insideOffense: player.inside_offense,
+                        outsideDefense: player.outside_defense,
+                        insideDefense: player.inside_defense,
+                        passing: player.passing,
+                        athleticism: player.athleticism,
+                      }}
+                      size="medium"
+                    />
                   </div>
-                  <div className="mt-2 text-xs text-gray-500">
+                  
+                  <div className="mt-2 text-xs text-gray-500 text-center">
                     {player.games_played} GP • {Math.round(player.total_points / Math.max(1, player.games_played))} PPG
                   </div>
                 </div>
@@ -132,12 +141,30 @@ export default function VictoryPage() {
             <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
               🎖️ Hall of Fame
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {gameState.hallOfFame.slice(0, 6).map((player: any, index: number) => (
-                <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                  <div className="font-bold text-gray-800">{player.name}</div>
-                  <div className="text-sm text-gray-600">{player.position} • Retired at {player.age}</div>
-                  <div className="text-xs text-gray-500 mt-1">
+                <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                  <div className="mb-4">
+                    <div className="font-bold text-gray-800 text-lg">{player.name}</div>
+                    <div className="text-sm text-gray-600">{player.position} • Retired at {player.age}</div>
+                  </div>
+                  
+                  {/* Hexagon Stats */}
+                  <div className="flex justify-center mb-4">
+                    <HexagonStats
+                      stats={{
+                        outsideOffense: player.outside_offense,
+                        insideOffense: player.inside_offense,
+                        outsideDefense: player.outside_defense,
+                        insideDefense: player.inside_defense,
+                        passing: player.passing,
+                        athleticism: player.athleticism,
+                      }}
+                      size="small"
+                    />
+                  </div>
+                  
+                  <div className="text-xs text-gray-500 text-center">
                     {player.games_played} GP • {player.total_points} PTS • {player.total_assists} AST • {player.total_rebounds} REB
                   </div>
                 </div>
