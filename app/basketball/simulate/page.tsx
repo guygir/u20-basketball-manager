@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { PageTutorialOverlay } from '@/components/Tutorial';
 import { sortPlayersByPosition, getPositionLabel } from '@/lib/basketball/utils';
 import { checkAchievements, ACHIEVEMENTS } from '@/lib/basketball/achievements';
+import { GAME_CONSTANTS } from '@/lib/basketball/constants';
 
 export default function SimulatePage() {
   const router = useRouter();
