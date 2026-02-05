@@ -83,43 +83,43 @@ export default function AchievementsPage() {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-800 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-blue-500">{stats.unlocked}</div>
-            <div className="text-gray-400 mt-2">Unlocked</div>
-            <div className="text-sm text-gray-500">of {stats.total}</div>
+          <div className="bg-amber-950/60 border border-amber-700/30 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-amber-400">{stats.unlocked}</div>
+            <div className="text-amber-200 mt-2">Unlocked</div>
+            <div className="text-sm text-amber-300/70">of {stats.total}</div>
           </div>
           
-          <div className="bg-gray-800 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-green-500">{stats.percentage}%</div>
-            <div className="text-gray-400 mt-2">Completion</div>
+          <div className="bg-amber-950/60 border border-amber-700/30 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-amber-400">{stats.percentage}%</div>
+            <div className="text-amber-200 mt-2">Completion</div>
           </div>
           
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-sm text-gray-400 mb-2">By Tier</div>
+          <div className="bg-amber-950/60 border border-amber-700/30 rounded-lg p-6">
+            <div className="text-sm text-amber-200 mb-2">By Tier</div>
             <div className="space-y-1 text-sm">
               {Object.entries(stats.byTier).map(([tier, data]) => (
-                <div key={tier} className="flex justify-between">
+                <div key={tier} className="flex justify-between text-amber-100">
                   <span className="capitalize">{tierIcons[tier as keyof typeof tierIcons]} {tier}:</span>
-                  <span className="text-gray-300">{data.unlocked}/{data.total}</span>
+                  <span className="text-amber-300">{data.unlocked}/{data.total}</span>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className="bg-gray-800 rounded-lg p-6">
-            <div className="text-sm text-gray-400 mb-2">Progress</div>
-            <div className="space-y-1 text-sm">
+          <div className="bg-amber-950/60 border border-amber-700/30 rounded-lg p-6">
+            <div className="text-sm text-amber-200 mb-2">Progress</div>
+            <div className="space-y-1 text-sm text-amber-100">
               <div className="flex justify-between">
                 <span>Total Wins:</span>
-                <span className="text-gray-300">{progress.totalWins}</span>
+                <span className="text-amber-300">{progress.totalWins}</span>
               </div>
               <div className="flex justify-between">
                 <span>Best Streak:</span>
-                <span className="text-gray-300">{progress.bestWinStreak}</span>
+                <span className="text-amber-300">{progress.bestWinStreak}</span>
               </div>
               <div className="flex justify-between">
                 <span>Championships:</span>
-                <span className="text-gray-300">{progress.totalChampionships}</span>
+                <span className="text-amber-300">{progress.totalChampionships}</span>
               </div>
             </div>
           </div>
@@ -134,8 +134,8 @@ export default function AchievementsPage() {
               className={`
                 px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-colors
                 ${selectedCategory === cat.id
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  ? 'bg-amber-600 text-white border-2 border-amber-400'
+                  : 'bg-amber-950/60 text-amber-200 border border-amber-700/30 hover:bg-amber-900/60'
                 }
               `}
             >
@@ -157,7 +157,7 @@ export default function AchievementsPage() {
                   rounded-lg p-6 border-2 transition-all
                   ${isUnlocked
                     ? `${tierColors[achievement.tier]} animate-slideUp`
-                    : 'border-gray-700 bg-gray-800/50 opacity-60'
+                    : 'border-amber-800/40 bg-amber-950/40 opacity-60'
                   }
                 `}
               >
@@ -168,26 +168,26 @@ export default function AchievementsPage() {
                 </div>
                 
                 {/* Title */}
-                <h3 className={`text-lg font-bold mb-2 ${isUnlocked ? 'text-white' : 'text-gray-500'}`}>
+                <h3 className={`text-lg font-bold mb-2 ${isUnlocked ? 'text-white' : 'text-amber-700'}`}>
                   {isHiddenAndLocked ? '???' : achievement.name}
                 </h3>
                 
                 {/* Description */}
-                <p className={`text-sm mb-4 ${isUnlocked ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-sm mb-4 ${isUnlocked ? 'text-amber-100' : 'text-amber-800/70'}`}>
                   {isHiddenAndLocked ? 'Hidden achievement - unlock to reveal!' : achievement.description}
                 </p>
                 
                 {/* Reward */}
                 {!isHiddenAndLocked && achievement.reward?.coins && (
-                  <div className={`text-sm ${isUnlocked ? 'text-yellow-500' : 'text-gray-600'}`}>
+                  <div className={`text-sm ${isUnlocked ? 'text-amber-400' : 'text-amber-800/70'}`}>
                     💰 Reward: {achievement.reward.coins} coins
                   </div>
                 )}
                 
                 {/* Unlocked Badge */}
                 {isUnlocked && (
-                  <div className="mt-3 pt-3 border-t border-gray-700">
-                    <div className="text-xs text-green-500 font-semibold">
+                  <div className="mt-3 pt-3 border-t border-amber-700/30">
+                    <div className="text-xs text-green-400 font-semibold">
                       ✓ UNLOCKED
                     </div>
                   </div>
@@ -195,8 +195,8 @@ export default function AchievementsPage() {
                 
                 {/* Locked Badge */}
                 {!isUnlocked && (
-                  <div className="mt-3 pt-3 border-t border-gray-700">
-                    <div className="text-xs text-gray-600 font-semibold">
+                  <div className="mt-3 pt-3 border-t border-amber-800/30">
+                    <div className="text-xs text-amber-800/70 font-semibold">
                       🔒 {isHiddenAndLocked ? 'HIDDEN' : 'LOCKED'}
                     </div>
                   </div>

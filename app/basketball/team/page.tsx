@@ -9,6 +9,9 @@ import Link from 'next/link';
 import { PageTutorialOverlay } from '@/components/Tutorial';
 import { sortPlayersByPosition, calculateOverallRating } from '@/lib/basketball/utils';
 import { GAME_CONSTANTS } from '@/lib/basketball/constants';
+import HexagonStats from '@/components/HexagonStats';
+import PlayerAvatar from '@/components/PlayerAvatar';
+import { CHARACTERISTICS, type Characteristic } from '@/lib/basketball/chemistry';
 
 export default function TeamPage() {
   const router = useRouter();
@@ -186,15 +189,166 @@ export default function TeamPage() {
           )}
         </div>
 
-        {/* Selected Player Details */}
+        {/* Player Details Modal */}
         {selectedPlayer && (
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-white mb-6">Player Details</h2>
-            <div className="max-w-2xl mx-auto">
-              <PlayerCard
-                player={selectedPlayer}
-                showDetails={true}
-              />
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setSelectedPlayer(null)}
+          >
+            <div
+              className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-lg">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center gap-4">
+                    <PlayerAvatar
+                      player={selectedPlayer}
+                      size={80}
+                      className="ring-4 ring-white/30"
+                    />
+                    <div>
+                      <h2 className="text-3xl font-bold">{selectedPlayer.name}</h2>
+                      <p className="text-lg opacity-90">
+                        {selectedPlayer.position} • Age {selectedPlayer.age} • Overall {calculateOverallRating(selectedPlayer)}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedPlayer(null)}
+                    className="text-white hover:text-gray-200 text-3xl font-bold leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-6">
+                {/* Hexagon Stats */}
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">Attributes</h3>
+                  <div className="flex justify-center">
+                    <HexagonStats
+                      stats={{
+                        outsideOffense: selectedPlayer.outside_offense,
+                        insideOffense: selectedPlayer.inside_offense,
+                        outsideDefense: selectedPlayer.outside_defense,
+                        insideDefense: selectedPlayer.inside_defense,
+                        passing: selectedPlayer.passing,
+                        athleticism: selectedPlayer.athleticism,
+                      }}
+                      size="large"
+                    />
+                  </div>
+                </div>
+
+                {/* Personality */}
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">Personality</h3>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    {selectedPlayer.characteristics && selectedPlayer.characteristics.length > 0 ? (
+                      <div className="space-y-3">
+                        {selectedPlayer.characteristics.map((charId: string) => {
+                          const char = CHARACTERISTICS[charId as Characteristic];
+                          return (
+                            <div key={charId} className="flex items-start gap-3">
+                              <span className="text-3xl">{char.emoji}</span>
+                              <div className="flex-1">
+                                <div className="font-bold text-gray-800">{char.name}</div>
+                                <div className="text-sm text-gray-600">{char.description}</div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <p className="text-gray-600">No personality traits</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Chemistry Preferences */}
+                {selectedPlayer.characteristics && selectedPlayer.characteristics.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Chemistry</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Likes */}
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <div className="font-bold text-green-800 mb-2">✓ Likes</div>
+                        <div className="space-y-1">
+                          {selectedPlayer.characteristics.flatMap((charId: string) => {
+                            const char = CHARACTERISTICS[charId as Characteristic];
+                            return char.likes.map(likeId => {
+                              const likedChar = CHARACTERISTICS[likeId];
+                              return (
+                                <div key={`${charId}-${likeId}`} className="text-sm text-green-700">
+                                  {likedChar.emoji} {likedChar.name}
+                                </div>
+                              );
+                            });
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Dislikes */}
+                      <div className="bg-red-50 rounded-lg p-4">
+                        <div className="font-bold text-red-800 mb-2">✗ Dislikes</div>
+                        <div className="space-y-1">
+                          {selectedPlayer.characteristics.flatMap((charId: string) => {
+                            const char = CHARACTERISTICS[charId as Characteristic];
+                            return char.dislikes.map(dislikeId => {
+                              const dislikedChar = CHARACTERISTICS[dislikeId];
+                              return (
+                                <div key={`${charId}-${dislikeId}`} className="text-sm text-red-700">
+                                  {dislikedChar.emoji} {dislikedChar.name}
+                                </div>
+                              );
+                            });
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Additional Stats */}
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">Status</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="text-gray-600 text-sm">Fatigue</div>
+                      <div className="text-2xl font-bold text-gray-800">{selectedPlayer.fatigue}%</div>
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="text-gray-600 text-sm">Games Played</div>
+                      <div className="text-2xl font-bold text-gray-800">{selectedPlayer.games_played || 0}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Career Stats */}
+                {(selectedPlayer.total_points || selectedPlayer.total_assists || selectedPlayer.total_rebounds) && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Career Stats</h3>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="bg-gray-50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-gray-800">{selectedPlayer.total_points || 0}</div>
+                        <div className="text-sm text-gray-600">Points</div>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-gray-800">{selectedPlayer.total_assists || 0}</div>
+                        <div className="text-sm text-gray-600">Assists</div>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-4 text-center">
+                        <div className="text-2xl font-bold text-gray-800">{selectedPlayer.total_rebounds || 0}</div>
+                        <div className="text-sm text-gray-600">Rebounds</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
