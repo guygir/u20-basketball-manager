@@ -98,11 +98,12 @@ export default function DraftPage() {
     const positions: Array<'PG' | 'SG' | 'SF' | 'PF' | 'C'> = ['PG', 'SG', 'SF', 'PF', 'C'];
     const updatedRoster: Player[] = [];
     
-    // Add the selected prospect at their natural position
+    // Add the selected prospect at their natural position (with fatigue reset)
     const draftedPlayer = selectDraftProspect(selectedProspect, gameState.game.id, selectedProspect.position);
+    draftedPlayer.fatigue = 0; // Reset fatigue for new season
     updatedRoster.push(draftedPlayer);
     
-    // Fill remaining 4 positions with auto-generated 18-year-olds
+    // Fill remaining 4 positions with auto-generated 18-year-olds (fatigue already 0)
     positions.forEach(position => {
       if (position !== selectedProspect.position) {
         const fillerPlayerBase = generatePlayer(gameState.game.id, position, 18);
@@ -181,10 +182,14 @@ export default function DraftPage() {
       p => !retiringPlayers.some(rp => rp.id === p.id)
     );
     
-    // Add drafted player
+    // Reset fatigue for all remaining players (new season)
+    updatedRoster = updatedRoster.map(p => ({ ...p, fatigue: 0 }));
+    
+    // Add drafted player (with fatigue reset)
+    newPlayer.fatigue = 0;
     updatedRoster.push(newPlayer);
     
-    // Fill roster to 5 players if needed (with random 18-year-olds)
+    // Fill roster to 5 players if needed (with random 18-year-olds, fatigue already 0)
     const positions: Array<'PG' | 'SG' | 'SF' | 'PF' | 'C'> = ['PG', 'SG', 'SF', 'PF', 'C'];
     while (updatedRoster.length < 5) {
       // Find missing position
@@ -243,14 +248,6 @@ export default function DraftPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Back Link */}
-        <Link
-          href="/basketball"
-          className="inline-block mb-4 text-white hover:text-gray-200 transition-colors"
-        >
-          ← Back to Hub
-        </Link>
-        
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-white mb-2">🏀 Draft Day 🏀</h1>

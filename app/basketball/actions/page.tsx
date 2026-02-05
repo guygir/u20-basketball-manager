@@ -208,8 +208,10 @@ export default function ActionsPage() {
               <div className="text-xs text-gray-500">
                 Age 18: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_18.GENERAL_ATTRIBUTES} attrs •
                 Age 19: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_19.GENERAL_ATTRIBUTES} attrs •
-                Age 20: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_20.GENERAL_ATTRIBUTES} attr •
-                Age 21: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.GENERAL_ATTRIBUTES} attrs
+                Age 20: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_20.GENERAL_ATTRIBUTES} attr
+                {GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.GENERAL_ATTRIBUTES > 0 && (
+                  <> • Age 21: {GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.GENERAL_ATTRIBUTES} attrs</>
+                )}
               </div>
               <div className="text-yellow-400">Cost: {GAME_CONSTANTS.ACTIONS.TRAIN_GENERAL.COST} coins</div>
               <div className="text-red-400 text-sm">+{GAME_CONSTANTS.ACTIONS.TRAIN_GENERAL.FATIGUE_COST} fatigue</div>
@@ -232,8 +234,10 @@ export default function ActionsPage() {
               <div className="text-xs text-gray-500">
                 Age 18: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_18.FOCUSED_IMPROVEMENT} •
                 Age 19: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_19.FOCUSED_IMPROVEMENT} •
-                Age 20: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_20.FOCUSED_IMPROVEMENT} •
-                Age 21: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.FOCUSED_IMPROVEMENT}
+                Age 20: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_20.FOCUSED_IMPROVEMENT}
+                {GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.FOCUSED_IMPROVEMENT > 0 && (
+                  <> • Age 21: +{GAME_CONSTANTS.BALANCE.TRAINING.AGE_21.FOCUSED_IMPROVEMENT}</>
+                )}
               </div>
               <div className="text-yellow-400">Cost: {GAME_CONSTANTS.ACTIONS.TRAIN_FOCUSED.COST} coins</div>
               <div className="text-red-400 text-sm">+{GAME_CONSTANTS.ACTIONS.TRAIN_FOCUSED.FATIGUE_COST} fatigue</div>
