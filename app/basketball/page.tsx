@@ -256,8 +256,8 @@ export default function BasketballHub() {
             ) : null}
             
             <div className="bg-white rounded-lg shadow-xl p-8">
-            <div className="flex justify-between items-start mb-6">
-              <div>
+            <div className="flex justify-between items-center mb-6 gap-4">
+              <div className="flex-1">
                 <h2 className="text-3xl font-bold text-gray-800">{game.team_name}</h2>
                 <p className="text-gray-600 mt-1">
                   Season {game.season_number} •
@@ -267,11 +267,12 @@ export default function BasketballHub() {
                   {game.week_number === GAME_CONSTANTS.BALANCE.PLAYOFF.FINALS_WEEK && ` Week ${game.week_number} (Finals)`}
                 </p>
               </div>
+              {/* Play Game Button - Moved to top */}
               <button
-                onClick={deleteGame}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                onClick={() => router.push('/basketball/simulate')}
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-xl font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
               >
-                Delete Game
+                🎮 Play Game
               </button>
             </div>
 
@@ -387,18 +388,10 @@ export default function BasketballHub() {
               </button>
               <TutorialButton />
             </div>
-            
-            {/* Play Game Button - Separate and Bigger */}
-            <button
-              onClick={() => router.push('/basketball/simulate')}
-              className="w-full px-8 py-6 bg-gradient-to-r from-red-600 to-red-700 text-white text-2xl font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              🎮 Play Game
-            </button>
           </div>
 
-          {/* GitHub Button */}
-          <div className="mt-8 flex justify-center">
+          {/* Bottom Buttons */}
+          <div className="mt-8 flex justify-center gap-4">
             <a
               href="https://github.com/guygir/u20-basketball-manager"
               target="_blank"
@@ -408,6 +401,13 @@ export default function BasketballHub() {
               <span>⭐</span>
               <span>GitHub</span>
             </a>
+            <button
+              onClick={deleteGame}
+              className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors flex items-center gap-2"
+            >
+              <span>🔄</span>
+              <span>New Campaign</span>
+            </button>
           </div>
 
           {/* Contributors Welcome */}
