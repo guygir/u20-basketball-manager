@@ -410,6 +410,44 @@ export default function BasketballHub() {
             </button>
           </div>
 
+          {/* Patch Notes */}
+          <div className="mt-8 bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              📋 Latest Updates
+            </h3>
+            <div className="space-y-4">
+              {/* Version 1.2.0 */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-sm font-semibold text-blue-400">v1.2.0</span>
+                  <span className="text-xs text-gray-400">February 5, 2024</span>
+                </div>
+                <ul className="text-sm text-gray-300 space-y-1 ml-4">
+                  <li>• Added team chemistry display in player modal</li>
+                  <li>• Added progress indicator to main tutorial (Step X of Y)</li>
+                  <li>• Changed "Play Game" to "Play Next Game" for clarity</li>
+                  <li>• Removed Quick Actions section from team page</li>
+                  <li>• Fixed duplicate "0" display bug in player modal</li>
+                </ul>
+              </div>
+              
+              {/* Version 1.1.0 */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-sm font-semibold text-blue-400">v1.1.0</span>
+                  <span className="text-xs text-gray-400">February 4, 2024</span>
+                </div>
+                <ul className="text-sm text-gray-300 space-y-1 ml-4">
+                  <li>• Fixed double-aging bug in season transitions</li>
+                  <li>• Added fatigue reset between seasons</li>
+                  <li>• Improved tutorial flow and shortened main tutorial</li>
+                  <li>• Enhanced achievements page color scheme</li>
+                  <li>• Renamed "Delete Game" to "New Campaign"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Contributors Welcome */}
           <p className="mt-6 text-gray-300 text-sm text-center">
             🤝 Contributors are welcome! This is an open-source project.
