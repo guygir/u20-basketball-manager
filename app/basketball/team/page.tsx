@@ -11,7 +11,7 @@ import { sortPlayersByPosition, calculateOverallRating } from '@/lib/basketball/
 import { GAME_CONSTANTS } from '@/lib/basketball/constants';
 import HexagonStats from '@/components/HexagonStats';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import { CHARACTERISTICS, type Characteristic } from '@/lib/basketball/chemistry';
+import { CHARACTERISTICS, type Characteristic, calculatePairChemistry } from '@/lib/basketball/chemistry';
 
 export default function TeamPage() {
   const router = useRouter();
@@ -313,6 +313,43 @@ export default function TeamPage() {
                   </div>
                 )}
 
+                {/* Team Chemistry */}
+                {selectedPlayer.characteristics && selectedPlayer.characteristics.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Team Chemistry</h3>
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="text-gray-600 text-sm mb-2">Chemistry with teammates</div>
+                      <div className="text-3xl font-bold text-gray-800">
+                        {(() => {
+                          const otherPlayers = roster.filter((p: Player) => p.id !== selectedPlayer.id);
+                          if (otherPlayers.length === 0) return 'N/A';
+                          
+                          let totalChemistry = 0;
+                          otherPlayers.forEach((teammate: Player) => {
+                            totalChemistry += calculatePairChemistry(
+                              (selectedPlayer.characteristics || []) as Characteristic[],
+                              (teammate.characteristics || []) as Characteristic[]
+                            );
+                          });
+                          
+                          const avgChemistry = totalChemistry / otherPlayers.length;
+                          const sign = avgChemistry > 0 ? '+' : '';
+                          const color = avgChemistry > 0 ? 'text-green-600' : avgChemistry < 0 ? 'text-red-600' : 'text-gray-800';
+                          
+                          return (
+                            <span className={color}>
+                              {sign}{avgChemistry.toFixed(1)}
+                            </span>
+                          );
+                        })()}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Average chemistry bonus with {roster.filter((p: Player) => p.id !== selectedPlayer.id).length} teammates
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Additional Stats */}
                 <div>
                   <h3 className="text-xl font-bold text-gray-800 mb-4">Status</h3>
@@ -329,7 +366,7 @@ export default function TeamPage() {
                 </div>
 
                 {/* Career Stats */}
-                {(selectedPlayer.total_points || selectedPlayer.total_assists || selectedPlayer.total_rebounds) && (
+                {!!(selectedPlayer.total_points || selectedPlayer.total_assists || selectedPlayer.total_rebounds) && (
                   <div>
                     <h3 className="text-xl font-bold text-gray-800 mb-4">Career Stats</h3>
                     <div className="grid grid-cols-3 gap-4">
@@ -407,37 +444,6 @@ export default function TeamPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="bg-white rounded-lg shadow-xl p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-              onClick={() => router.push('/basketball/simulate')}
-            >
-              Play Game
-            </button>
-            <button
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-              onClick={() => router.push('/basketball/actions')}
-            >
-              Weekly Actions
-            </button>
-            <button
-              className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-              onClick={() => router.push('/basketball/marketplace')}
-            >
-              Player Market
-            </button>
-            <button
-              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-              onClick={() => router.push('/basketball/facilities')}
-            >
-              Facilities
-            </button>
           </div>
         </div>
 

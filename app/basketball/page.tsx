@@ -267,12 +267,12 @@ export default function BasketballHub() {
                   {game.week_number === GAME_CONSTANTS.BALANCE.PLAYOFF.FINALS_WEEK && ` Week ${game.week_number} (Finals)`}
                 </p>
               </div>
-              {/* Play Game Button - Moved to top */}
+              {/* Play Next Game Button - Moved to top */}
               <button
                 onClick={() => router.push('/basketball/simulate')}
                 className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-xl font-bold rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
               >
-                🎮 Play Game
+                🎮 Play Next Game
               </button>
             </div>
 

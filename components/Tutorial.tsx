@@ -9,6 +9,7 @@ import {
   goToPreviousStep,
   getPreviousStep,
   permanentlyDismissTutorial,
+  TUTORIAL_SEQUENCE,
   type TutorialStep,
 } from '@/lib/basketball/tutorial';
 
@@ -167,9 +168,14 @@ export function TutorialOverlay() {
 
           {/* Header */}
           <div className="flex items-start justify-between mb-4 pr-8">
-            <h3 className="text-xl font-bold text-white">
-              {currentStep.title}
-            </h3>
+            <div>
+              <div className="text-sm text-gray-400 mb-1">
+                Step {TUTORIAL_SEQUENCE.indexOf(currentStep.id) + 1} of {TUTORIAL_SEQUENCE.length}
+              </div>
+              <h3 className="text-xl font-bold text-white">
+                {currentStep.title}
+              </h3>
+            </div>
           </div>
           
           {/* Description */}
