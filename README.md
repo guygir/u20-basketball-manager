@@ -144,6 +144,22 @@ This project is open source and available under the MIT License.
 
 ## 🔄 Version History
 
+### v1.2.0 (February 5, 2024)
+- Added team chemistry display in player modal
+- Added progress indicator to main tutorial (Step X of Y)
+- Changed "Play Game" to "Play Next Game" for clarity
+- Removed Quick Actions section from team page
+- Fixed duplicate "0" display bug in player modal
+- Added patch notes section to main hub page
+
+### v1.1.0 (February 4, 2024)
+- Fixed double-aging bug in season transitions
+- Added fatigue reset between seasons
+- Improved tutorial flow and shortened main tutorial
+- Enhanced achievements page color scheme
+- Renamed "Delete Game" to "New Campaign"
+- Moved "Play Game" button to top of hub page
+
 ### v1.0.0 (February 2026)
 - Initial release
 - Complete game loop with 14-week seasons
